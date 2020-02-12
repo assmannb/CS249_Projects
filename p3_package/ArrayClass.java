@@ -524,6 +524,8 @@ public class ArrayClass
 
     /**
      * Sorts data using the Shell's sort algorithm
+     * 
+     * @author Micheal Leverignton
      */
     void runShellSort()
     {
