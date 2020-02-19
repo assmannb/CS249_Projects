@@ -8,6 +8,7 @@ package p4_package;
  */
 public class ContainerBoxClassMain
 {
+
     /**
      * Driver main method
      * 
@@ -21,21 +22,23 @@ public class ContainerBoxClassMain
 
         testContainer.setDisplayFlag( displayFlagSet );
 
-        // Small data set for 10 x 10 container box
-        testContainer.addBoxToList( 4, 4 );
-        testContainer.addBoxToList( 6, 7 );
-        testContainer.addBoxToList( 4, 6 );
-        testContainer.addBoxToList( 3, 6 );
-
-        // data set
         /*
-         * testContainer.addBoxToList( 4, 5 ); testContainer.addBoxToList( 2, 3
-         * ); testContainer.addBoxToList( 2, 4 ); testContainer.addBoxToList( 5,
-         * 7 ); testContainer.addBoxToList( 7, 6 ); testContainer.addBoxToList(
-         * 5, 5 ); testContainer.addBoxToList( 5, 3 );
-         * testContainer.addBoxToList( 3, 3 ); testContainer.addBoxToList( 4, 3
-         * ); testContainer.addBoxToList( 4, 2 );
+         * // Small data set for 10 x 10 container box
+         * testContainer.addBoxToList( 4, 4 ); testContainer.addBoxToList( 6, 7
+         * ); testContainer.addBoxToList( 4, 6 ); testContainer.addBoxToList( 3,
+         * 6 );
          */
+        // data set
+        testContainer.addBoxToList( 4, 2 );
+        testContainer.addBoxToList( 2, 3 );
+        testContainer.addBoxToList( 2, 4 );
+        testContainer.addBoxToList( 5, 7 );
+        testContainer.addBoxToList( 7, 6 );
+        testContainer.addBoxToList( 5, 5 );
+        testContainer.addBoxToList( 5, 3 );
+        testContainer.addBoxToList( 3, 3 );
+        testContainer.addBoxToList( 4, 3 );
+        testContainer.addBoxToList( 4, 5 );
 
         /*
          * // data set testContainer.addBoxToList( 3, 3 );

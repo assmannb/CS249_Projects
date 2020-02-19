@@ -101,27 +101,21 @@ public class ContainerBoxClass
      */
     public boolean fillContainerBox()
     {
-        /*
-         * check if there are boxes avaible and there is space (A)check if box
-         * fits mark box used iterate to next unused box in list (B)Box does not
-         * fit rotate box and check again if it fits mark box tried, move to the
-         * next box
-         */
-        int boxNumber = findNextUnusedBoxIndex( 0 );
+        int boxIndex = findNextUnusedBoxIndex( 0 );
         PointClass nextSpace = findNextOpenLocation();
         BoxClass workingBox;
 
         if( nextSpace == null )
         {
-            if( boxNumber == NO_BOXES_AVAILABLE )
+            if( boxIndex == NO_BOXES_AVAILABLE )
             {
                 return true;
             }
             return false;
         }
-        while( boxNumber != NO_BOXES_AVAILABLE )
+        while( boxIndex != NO_BOXES_AVAILABLE )
         {
-            workingBox = boxList[ boxNumber ];
+            workingBox = boxList[ boxIndex ];
             if( checkForFitInField( nextSpace, workingBox ) )
             {
                 fillBoxLocation( nextSpace, workingBox, FILL_BOX );
@@ -154,9 +148,8 @@ public class ContainerBoxClass
                 workingBox.unsetUsedState();
 
             }
-            boxNumber++ ;
-            boxNumber = findNextUnusedBoxIndex( boxNumber );
-
+            boxIndex++ ;
+            boxIndex = findNextUnusedBoxIndex( boxIndex );
         }
         return false;
     }
