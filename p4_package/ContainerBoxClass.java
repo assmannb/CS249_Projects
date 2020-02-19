@@ -107,42 +107,58 @@ public class ContainerBoxClass
          * fit rotate box and check again if it fits mark box tried, move to the
          * next box
          */
-        int boxNumber = 0;
-        PointClass nextSpace;
+        int boxNumber = findNextUnusedBoxIndex( 0 );
+        PointClass nextSpace = findNextOpenLocation();
         BoxClass workingBox;
-        while( ( findNextUnusedBoxIndex( boxNumber ) != NO_BOXES_AVAILABLE )
-                || ( findNextOpenLocation() != null ) )
+
+        if( nextSpace == null )
         {
-            nextSpace = findNextOpenLocation();
+            if( boxNumber == NO_BOXES_AVAILABLE )
+            {
+                return true;
+            }
+            return false;
+        }
+        while( boxNumber != NO_BOXES_AVAILABLE )
+        {
             workingBox = boxList[ boxNumber ];
-            if( checkForFitInField( nextSpace, workingBox )
-                    && ( !workingBox.isUsed() ) )
+            if( checkForFitInField( nextSpace, workingBox ) )
             {
                 fillBoxLocation( nextSpace, workingBox, FILL_BOX );
+                displayField();
                 workingBox.setUsedState();
-            }
-            else
-            {
-                workingBox.rotate();
-                if( checkForFitInField( nextSpace, workingBox )
-                        && ( !workingBox.isUsed() ) )
+
+                if( fillContainerBox() )
                 {
-                    fillBoxLocation( nextSpace, workingBox, FILL_BOX );
-                    workingBox.setUsedState();
+                    return true;
+
                 }
+                fillBoxLocation( nextSpace, workingBox, CLEAR_BOX );
+                displayField();
                 workingBox.unsetUsedState();
-                boxNumber++ ;
+            }
+            workingBox.rotate();
+            if( checkForFitInField( nextSpace, workingBox ) )
+            {
+                fillBoxLocation( nextSpace, workingBox, FILL_BOX );
+                displayField();
+                workingBox.setUsedState();
 
-                if( boxNumber == numBoxesAvailable )
+                if( fillContainerBox() )
                 {
-                    fillBoxLocation( nextSpace, workingBox, CLEAR_BOX );
-                    boxNumber = 0;
+                    return true;
+
                 }
-                // recursion stuff
+                fillBoxLocation( nextSpace, workingBox, CLEAR_BOX );
+                displayField();
+                workingBox.unsetUsedState();
 
             }
+            boxNumber++ ;
+            boxNumber = findNextUnusedBoxIndex( boxNumber );
+
         }
-        return false; // stub method dummy return
+        return false;
     }
 
     /**
