@@ -1,0 +1,588 @@
+package p5_package;
+
+public class ArrayClass
+{
+    private int arrayCapacity;
+    private int arraySize;
+    private static int DEFAULT_CAPACITY = 10;
+    public static final int FAILED_ACCESS = -999999;
+    private int[] localArray;
+
+    /**
+     * Default constructor, initializes array to default capacity
+     */
+    ArrayClass()
+    {
+        localArray = new int[ DEFAULT_CAPACITY ];
+        arrayCapacity = DEFAULT_CAPACITY;
+        arraySize = 0;
+    }
+
+    /**
+     * Initializing constructor, initializes array to specified capacity
+     * <p>
+     * Note: Must not be initialized to a capacity less than the default
+     * capacity
+     * 
+     * @param capacity - maximum capacity specification for the array
+     */
+    ArrayClass( int capacity )
+    {
+        localArray = new int[ capacity ];
+        arrayCapacity = capacity;
+        arraySize = 0;
+    }
+
+    /**
+     * Initializing constructor, initializes array to specified capacity, size
+     * to specified value, then fills all elements with specified size value
+     * <p>
+     * Note: If given capacity less than default capacity, capacity must be set
+     * to default capacity
+     * <p>
+     * Note: If given size is greater than given capacity, capacity must be set
+     * to given size
+     * 
+     * @param capacity  - maximum capacity specification for the array
+     * @param size      - sets the number of items to be filled in array, and
+     *                  sets the size of the ArrayClass object
+     * @param fillValue - value to be placed in all elements of initialized
+     *                  array up to the size
+     */
+    ArrayClass( int capacity, int size, int fillValue )
+    {
+        int index;
+        if( capacity < 0 )
+        {
+            capacity = DEFAULT_CAPACITY;
+        }
+        if( size > capacity )
+        {
+            size = capacity;
+        }
+        localArray = new int[ capacity ];
+        arrayCapacity = capacity;
+        arraySize = 0;
+        for( index = 0; index < size; index++ )
+        {
+            localArray[ index ] = fillValue;
+            arraySize++ ;
+        }
+
+    }
+
+    /**
+     * Copy constructor, initializes array to size and capacity of copied array,
+     * then copies only the elements up to the given size
+     * 
+     * @param copied - ArrayClass object to be copied
+     */
+    ArrayClass( ArrayClass copied )
+    {
+        int index;
+        this.arraySize = copied.arraySize;
+        this.arrayCapacity = copied.arrayCapacity;
+        localArray = new int[ arrayCapacity ];
+
+        for( index = 0; index < arraySize; index++ )
+        {
+            localArray[ index ] = copied.localArray[ index ];
+        }
+    }
+
+    /**
+     * Accesses item in array at specified index if index within array size
+     * bounds
+     * 
+     * @param accessIndex- index of requested element value
+     * @return accessed value if successful, FAILED_ACCESS (-999999) if not
+     */
+    int accessItemAt( int accessIndex )
+    {
+        int accessItem;
+        if( accessIndex < arraySize )
+        {
+            accessItem = localArray[ accessIndex ];
+            return accessItem;
+        }
+        return FAILED_ACCESS;
+    }
+
+    /**
+     * Appends item to end of array, if array is not full, e.g., no more values
+     * can be added
+     * 
+     * @param newValue- value to be appended to array
+     * @return boolean success if appended, or failure if array was full
+     */
+    boolean appendItem( int newValue )
+    {
+        if( !isFull() )
+        {
+            localArray[ arraySize ] = newValue;
+            arraySize++ ;
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Clears array of all valid values by setting array size to zero, values
+     * remain in array but are not accessible
+     * 
+     */
+    void clear()
+    {
+        arraySize = 0;
+    }
+
+    /**
+     * Simple array dump for testing purposes
+     */
+    public void dump()
+    {
+        int index;
+        System.out.print( "[" );
+        for( index = 0; index < arraySize; index++ )
+        {
+            System.out.print( localArray[ index ] + " " );
+        }
+        System.out.print( "]" );
+    }
+
+    /**
+     * Description: Gets current capacity of array
+     * <p>
+     * Note: capacity of array indicates number of values the array can hold
+     * 
+     * @return capacity of array
+     */
+    int getCurrentCapacity()
+    {
+        return arrayCapacity;
+    }
+
+    /**
+     * Description: Gets current size of array
+     * <p>
+     * Note: size of array indicates number of valid or viable values in the
+     * array
+     * 
+     * @return size of array
+     */
+    int getCurrentSize()
+    {
+        return arraySize;
+    }
+
+    /**
+     * Generates random number between given low and high values
+     * 
+     * @param low  lowest value that will be generated by method
+     * 
+     * @param high highest value that will be generated by method
+     * 
+     * @return the generated random value
+     */
+    private int getRandBetween( int low, int high )
+    {
+        int value, range = high - low + 2;
+
+        value = ( int ) ( Math.random() * range );
+
+        return low + value;
+    }
+
+    /**
+     * Description: Inserts item to array at specified index if array is not
+     * full, e.g., no more values can be added
+     * <p>
+     * Note: Value is inserted at given index, all data from that index to the
+     * end of the array is shifted up by one
+     * <p>
+     * Note: Value can be inserted after the last valid element but not at any
+     * index past that point
+     * 
+     * @param insertIndex - index of element into which value is to be inserted
+     * @param newValue    - value to be inserted into array
+     * @return boolean success if inserted, or failure if array was full
+     */
+    boolean insertItemAt( int insertIndex, int newValue )
+    {
+        int index;
+        if( !isFull() )
+        {
+            for( index = arraySize; index > insertIndex; index-- )
+            {
+                localArray[ index ] = localArray[ index - 1 ];
+            }
+            localArray[ insertIndex ] = newValue;
+            arraySize++ ;
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Tests for size of array equal to zero, no valid values stored in array
+     * 
+     * @return boolean result of test for empty
+     */
+    boolean isEmpty()
+    {
+        return arraySize == 0;
+    }
+
+    /**
+     * Tests for size of array equal to capacity, no more values can be added
+     * 
+     * @return boolean result of test for full
+     */
+    boolean isFull()
+    {
+        return arraySize >= arrayCapacity;
+    }
+
+    /**
+     * Tests for value found in object array; returns true if value within
+     * array, false otherwise
+     * 
+     * @param testVal - value to be tested
+     * @return boolean true if value is found in array, false otherwise
+     */
+    boolean isInArray( int testVal )
+    {
+        int index;
+        for( index = 0; index < arraySize; index++ )
+        {
+            if( localArray[ index ] == testVal )
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Loads a specified number of unique random numbers in object
+     * <p>
+     * Note: This method overwrites all data in the array up to the number of
+     * randoms requested
+     * <p>
+     * Note: If requested number of randoms is greater than the array capacity,
+     * the array is resized
+     * <p>
+     * Note: Size is set to number of random numbers requested
+     * <p>
+     * Exceptional Condition: If more values are requested than are possible
+     * given the range of numbers, method returns false, otherwise, it returns
+     * true
+     * 
+     * @param numRands  - number of random values requested
+     * @param lowLimit  - lowest value to be generated
+     * @param highLimit - highest value to be generated
+     * @return boolean true if method sucessful; false otherwise *
+     */
+    boolean loadUniqueRandoms( int numRands, int lowLimit, int highLimit )
+    {
+        int index;
+        int randomNumber;
+        if( ( numRands < highLimit - lowLimit ) || ( highLimit > lowLimit ) )
+        {
+            if( numRands > arraySize )
+            {
+                resize( numRands );
+            }
+            clear();
+            for( index = 0; index < numRands; index++ )
+            {
+                randomNumber = getRandBetween( lowLimit, highLimit );
+                if( !isInArray( randomNumber ) )
+                {
+                    appendItem( randomNumber );
+                }
+                else
+                {
+                    index-- ;
+                }
+            }
+            arraySize = numRands;
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Description: Removes item from array at specified index if index within
+     * array size bounds
+     * <p>
+     * Note: Each data item from the element immediately above the remove index
+     * to the end of the array is moved down by one element
+     * 
+     * @param removeIndex - index of element value to be removed
+     * @return removed value if successful, FAILED_ACCESS (-999999) if not
+     * 
+     */
+    int removeItemAt( int removeIndex )
+    {
+        int index;
+        if( removeIndex < arraySize )
+        {
+            int index_element = localArray[ removeIndex ];
+            for( index = removeIndex; index < arraySize; index++ )
+            {
+                localArray[ index ] = localArray[ index + 1 ];
+            }
+            arraySize-- ;
+            return index_element;
+        }
+        return FAILED_ACCESS;
+    }
+
+    /**
+     * Description: Resets array capacity, copies current size and current size
+     * number of elements
+     * <p>
+     * Exception: Method will not resize capacity below current array size,
+     * returns false if this is attempted, true otherwise
+     * 
+     * @param newCapacity - new capacity to be set; must be larger than current
+     *                    capacity
+     * @return boolean condition of resize success or failure
+     */
+    boolean resize( int newCapacity )
+    {
+        int index;
+        if( newCapacity >= arraySize )
+        {
+            arrayCapacity = newCapacity;
+            int copiedArray[] = new int[ arrayCapacity ];
+            for( index = 0; index < arraySize; index++ )
+            {
+                copiedArray[ index ] = localArray[ index ];
+            }
+            localArray = copiedArray;
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Merges values brought in between a low and high index segment of an array
+     * <p>
+     * Note: uses locally sized single array for temporary storage
+     * 
+     * @param lowIndex    - lowest index of array segment to be managed
+     * @param middleIndex - middle index of array segment to be managed
+     * @param highIndex   - high index of array segment to be managed
+     */
+    private void runMerge( int lowIndex, int middleIndex, int highIndex )
+    {
+        int leftIndex = lowIndex, rightIndex = middleIndex + 1,
+                position = leftIndex;
+        int[] mergeArray = new int[ arrayCapacity ];
+        for( int i = lowIndex; i <= highIndex; i++ )
+        {
+            mergeArray[ i ] = localArray[ i ];
+        }
+        while( leftIndex <= middleIndex || rightIndex <= highIndex )
+        {
+            if( leftIndex <= middleIndex && rightIndex <= highIndex )
+            {
+                if( mergeArray[ leftIndex ] <= mergeArray[ rightIndex ] )
+                {
+                    localArray[ position ] = mergeArray[ leftIndex ];
+                    leftIndex += 1;
+                }
+                else
+                {
+                    localArray[ position ] = mergeArray[ rightIndex ];
+                    rightIndex += 1;
+                }
+            }
+            else if( leftIndex <= middleIndex )
+            {
+                localArray[ position ] = mergeArray[ leftIndex ];
+                leftIndex += 1;
+            }
+            else if( rightIndex <= highIndex )
+            {
+                localArray[ position ] = mergeArray[ rightIndex ];
+                rightIndex += 1;
+            }
+            position += 1;
+        }
+    }
+
+    /**
+     * Data sorted using merge sort algorithm
+     * <p>
+     * Note: Call runMergeSortHelper with lower and upper indices of array to be
+     * sorted
+     * 
+     */
+    void runMergeSort()
+    {
+        runMergeSortHelper( 0, arraySize - 1 );
+    }
+
+    /**
+     * Merge sort helper, places low and high indices of array segment to be
+     * processed into recursive method, then sorts data using merge sort
+     * algorithm
+     * 
+     * @param lowIndex  - lowest index of array segment to be managed; this
+     *                  varies as the segments are broken down recursively
+     * @param highIndex - highest index of array segment to be managed; this
+     *                  varies as the segments are broken down recursively
+     */
+    private void runMergeSortHelper( int lowIndex, int highIndex )
+    {
+        int middleIndex;
+        if( lowIndex < highIndex )
+        {
+            middleIndex = ( lowIndex + highIndex ) / 2;
+            runMergeSortHelper( lowIndex, middleIndex );
+            runMergeSortHelper( middleIndex + 1, highIndex );
+            runMerge( lowIndex, middleIndex, highIndex );
+        }
+    }
+
+    /**
+     * partitions array using the first value as the partition; when this method
+     * is complete the partition value is in the correct location in the array
+     * 
+     * @param lowIndex  - low index of array segment to be partitioned
+     * @param highIndex - high index of array segment to be partitioned
+     * @return integer index of partition pivot
+     */
+    private int runPartition( int lowIndex, int highIndex )
+    {
+        int leftIndex = lowIndex;
+        int rightIndex = highIndex;
+        int middleIndex = ( lowIndex + highIndex ) / 2;
+        int pivot = localArray[ middleIndex ];
+        while( leftIndex <= rightIndex )
+        {
+            while( localArray[ leftIndex ] < pivot )
+            {
+                leftIndex++ ;
+            }
+            while( localArray[ rightIndex ] > pivot )
+            {
+                rightIndex-- ;
+            }
+            if( leftIndex <= rightIndex )
+            {
+                swapValuesAtIndex( rightIndex, leftIndex );
+                leftIndex++ ;
+                rightIndex-- ;
+            }
+        }
+        return leftIndex;
+    }
+
+    /**
+     * Data sorted using quick sort algorithm
+     * <p>
+     * Note: Call runQuickSortHelper with lower and upper indices of array to be
+     * sorted
+     */
+    void runQuickSort()
+    {
+        runQuickSortHelper( 0, arraySize - 1 );
+    }
+
+    /**
+     * helper method run with parameters that support recursive access
+     * 
+     * @param lowIndex  - low index of the segment of the array to be processed
+     * @param highIndex - high index of the segment of the array to be processed
+     */
+    private void runQuickSortHelper( int lowIndex, int highIndex )
+    {
+        int index = runPartition( lowIndex, highIndex );
+
+        if( lowIndex < index - 1 )
+        {
+            runQuickSortHelper( lowIndex, index - 1 );
+
+        }
+        if( index < highIndex )
+        {
+            runQuickSortHelper( index, highIndex );
+
+        }
+    }
+
+    /**
+     * Sorts data using the Shell's sort algorithm
+     * 
+     * @author Micheal Leverignton
+     */
+    void runShellSort()
+    {
+        int gap, gapPassIndex, insertionIndex;
+        int tempItem, testItem;
+        boolean continueSearch;
+
+        for( gap = arraySize / 2; gap > 0; gap /= 2 )
+        {
+            for( gapPassIndex = gap; gapPassIndex < arraySize; gapPassIndex++ )
+            {
+                tempItem = localArray[ gapPassIndex ];
+
+                insertionIndex = gapPassIndex;
+
+                continueSearch = true;
+
+                while( continueSearch && insertionIndex >= gap )
+                {
+                    testItem = localArray[ insertionIndex - gap ];
+
+                    if( testItem > tempItem )
+                    {
+                        localArray[ insertionIndex ] = localArray[ insertionIndex
+                                - gap ];
+
+                        insertionIndex -= gap;
+                    }
+
+                    else
+                    {
+                        continueSearch = false;
+                    }
+
+                } // end search loop
+
+                localArray[ insertionIndex ] = tempItem;
+            } // end list loop
+
+        } // end gap size setting loop
+
+    }
+
+    /**
+     * swaps values in the object array by taking in the indices of the array
+     * locations
+     * <p>
+     * Note: for a small level of optimization, this method does not swap values
+     * if the indices are the same
+     * 
+     * @param oneIndex   index of the of the values to be swapped
+     * 
+     * @param otherIndex index of the other value to be swapped
+     */
+    private void swapValuesAtIndex( int oneIndex, int otherIndex )
+    {
+        int temp = localArray[ oneIndex ];
+
+        if( oneIndex != otherIndex )
+        {
+            localArray[ oneIndex ] = localArray[ otherIndex ];
+
+            localArray[ otherIndex ] = temp;
+        }
+    }
+}
