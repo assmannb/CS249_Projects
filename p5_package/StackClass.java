@@ -37,7 +37,7 @@ public class StackClass
      */
     public StackClass( StackClass copied )
     {
-        stackArray = new IteratorClass( copied );
+        stackArray = copied.stackArray;
     }
 
     /**
@@ -122,9 +122,9 @@ public class StackClass
     {
         int index;
         System.out.println( "Bottom of Stack -|" );
-        for( index = 0; index < stackArray.arraySize(); index++ )
+        for( index = 0; index < stackArray.getCurrentSize(); index++ )
         {
-            System.out.print( stackArray.localArray[ index ] );
+            System.out.print( stackArray.accessItemAt( index ) );
             System.out.print( "," );
         }
         System.out.println( "<- Top of Stack" );

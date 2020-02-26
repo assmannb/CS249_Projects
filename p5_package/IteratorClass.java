@@ -15,7 +15,8 @@ public class IteratorClass extends ArrayClass
      */
     public IteratorClass()
     {
-        ArrayClass();
+        super();
+        currentIndex = 0;
     }
 
     /**
@@ -26,7 +27,8 @@ public class IteratorClass extends ArrayClass
      */
     public IteratorClass( int initialCapacity )
     {
-        ArrayClass( initialCapacity );
+        super( initialCapacity );
+        currentIndex = 0;
     }
 
     /**
@@ -36,7 +38,8 @@ public class IteratorClass extends ArrayClass
      */
     public IteratorClass( IteratorClass copied )
     {
-
+        super( copied );
+        currentIndex = copied.getCurrentSize();
     }
 
     /**
@@ -47,7 +50,7 @@ public class IteratorClass extends ArrayClass
      */
     public boolean addItem( int newValue )
     {
-
+        return super.insertItemAt( currentIndex, newValue );
     }
 
     /**
@@ -57,16 +60,17 @@ public class IteratorClass extends ArrayClass
      */
     public void displayIteratorList()
     {
-        int idnex;
+        int index;
+        int arraySize = super.getCurrentSize();
         for( index = 0; index < arraySize; index++ )
         {
-            if( index = currentIndex )
+            if( index == currentIndex )
             {
-                System.out.print( "[" + localArray[ index ] + "]," );
+                System.out.print( "[" + super.accessItemAt( index ) + "]," );
             }
             else
             {
-                System.out.print( localArray[ index ] + ", " );
+                System.out.print( super.accessItemAt( index ) + ", " );
             }
         }
     }
@@ -79,7 +83,7 @@ public class IteratorClass extends ArrayClass
      */
     public boolean hasNext()
     {
-
+        return super.isInArray( super.accessItemAt( currentIndex + 1 ) );
     }
 
     /**
@@ -90,7 +94,7 @@ public class IteratorClass extends ArrayClass
      */
     public boolean hasPrevious()
     {
-
+        return super.isInArray( super.accessItemAt( currentIndex - 1 ) );
     }
 
     /**
@@ -101,7 +105,7 @@ public class IteratorClass extends ArrayClass
      */
     public boolean isAtLastItem()
     {
-
+        return currentIndex == super.getCurrentSize();
     }
 
     /**
@@ -112,7 +116,7 @@ public class IteratorClass extends ArrayClass
      */
     public boolean isAtFirstItem()
     {
-
+        return currentIndex == 0;
     }
 
     /**
@@ -126,7 +130,7 @@ public class IteratorClass extends ArrayClass
      */
     public int removeCurrent()
     {
-
+        return super.removeItemAt( currentIndex );
     }
 
     /**
@@ -137,7 +141,7 @@ public class IteratorClass extends ArrayClass
      */
     public int returnCurrent()
     {
-        return currentIndex;
+        return super.accessItemAt( currentIndex );
     }
 
     /**
@@ -149,7 +153,7 @@ public class IteratorClass extends ArrayClass
      */
     public int returnNext()
     {
-
+        return super.accessItemAt( currentIndex + 1 );
     }
 
     /**
@@ -162,7 +166,7 @@ public class IteratorClass extends ArrayClass
      */
     public int returnPrevious()
     {
-
+        return super.accessItemAt( currentIndex - 1 );
     }
 
     /**
@@ -172,7 +176,7 @@ public class IteratorClass extends ArrayClass
      */
     public boolean setToFirstItem()
     {
-        if( !ArrayClass.isFull() )
+        if( !super.isFull() )
         {
             currentIndex = 0;
             return true;
@@ -187,9 +191,9 @@ public class IteratorClass extends ArrayClass
      */
     public boolean setToLastItem()
     {
-        if( !ArrayClass.isFull() )
+        if( !super.isFull() )
         {
-            currentIndex = ArrayClass.getCurrentSize();
+            currentIndex = super.getCurrentSize();
             return true;
         }
         return false;
