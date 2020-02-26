@@ -76,7 +76,7 @@ public class StackClass
      */
     public int peek()
     {
-        return ( ( IteratorClass ) stackArray ).returnCurrent();
+        return ( ( IteratorClass ) stackArray ).accessItemAt( TOP_INDEX );
     }
 
     /**
@@ -87,7 +87,7 @@ public class StackClass
      */
     public int pop()
     {
-        return ( ( IteratorClass ) stackArray ).removeCurrent();
+        return ( ( IteratorClass ) stackArray ).removeItemAt( TOP_INDEX );
     }
 
     /**
@@ -98,7 +98,8 @@ public class StackClass
      */
     public boolean push( int newValue )
     {
-        return ( ( IteratorClass ) stackArray ).appendItem( newValue );
+        return ( ( IteratorClass ) stackArray ).insertItemAt( TOP_INDEX,
+                newValue );
     }
 
     /**
@@ -121,8 +122,9 @@ public class StackClass
     public void displayStack()
     {
         int index;
-        System.out.println( "Bottom of Stack -|" );
-        for( index = 0; index < stackArray.getCurrentSize(); index++ )
+        System.out.print( "Bottom of Stack -|" );
+        for( index = stackArray.getCurrentSize()
+                - 1; index >= TOP_INDEX; index-- )
         {
             System.out.print( stackArray.accessItemAt( index ) );
             System.out.print( "," );

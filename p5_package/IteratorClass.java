@@ -16,7 +16,7 @@ public class IteratorClass extends ArrayClass
     public IteratorClass()
     {
         super();
-        currentIndex = 0;
+        currentIndex = -1;
     }
 
     /**
@@ -28,7 +28,7 @@ public class IteratorClass extends ArrayClass
     public IteratorClass( int initialCapacity )
     {
         super( initialCapacity );
-        currentIndex = 0;
+        currentIndex = -1;
     }
 
     /**
@@ -39,7 +39,7 @@ public class IteratorClass extends ArrayClass
     public IteratorClass( IteratorClass copied )
     {
         super( copied );
-        currentIndex = copied.getCurrentSize();
+        currentIndex = copied.currentIndex;
     }
 
     /**
@@ -153,7 +153,12 @@ public class IteratorClass extends ArrayClass
      */
     public int returnNext()
     {
-        return super.accessItemAt( currentIndex + 1 );
+        int returnVal = super.accessItemAt( currentIndex + 1 );
+        if( returnVal != FAILED_ACCESS )
+        {
+            currentIndex++ ;
+        }
+        return returnVal;
     }
 
     /**
@@ -166,7 +171,12 @@ public class IteratorClass extends ArrayClass
      */
     public int returnPrevious()
     {
-        return super.accessItemAt( currentIndex - 1 );
+        int returnVal = super.accessItemAt( currentIndex - 1 );
+        if( returnVal != FAILED_ACCESS )
+        {
+            currentIndex-- ;
+        }
+        return returnVal;
     }
 
     /**
