@@ -288,7 +288,7 @@ public class ArrayClass
     {
         int index;
         int randomNumber;
-        if( ( numRands < highLimit - lowLimit ) || ( highLimit > lowLimit ) )
+        if( ( numRands < highLimit - lowLimit ) && ( highLimit > lowLimit ) )
         {
             if( numRands > arraySize )
             {
@@ -354,7 +354,7 @@ public class ArrayClass
     boolean resize( int newCapacity )
     {
         int index;
-        if( newCapacity >= arraySize )
+        if( newCapacity >= arrayCapacity )
         {
             arrayCapacity = newCapacity;
             int copiedArray[] = new int[ arrayCapacity ];
@@ -382,9 +382,10 @@ public class ArrayClass
         int leftIndex = lowIndex, rightIndex = middleIndex + 1,
                 position = leftIndex;
         int[] mergeArray = new int[ arrayCapacity ];
-        for( int i = lowIndex; i <= highIndex; i++ )
+        int index;
+        for( index = lowIndex; index <= highIndex; index++ )
         {
-            mergeArray[ i ] = localArray[ i ];
+            mergeArray[ index ] = localArray[ index ];
         }
         while( leftIndex <= middleIndex || rightIndex <= highIndex )
         {
