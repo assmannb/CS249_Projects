@@ -24,8 +24,7 @@ public class BST_ClassMain
     public static void main( String[] args )
     {
         Generic_BST_Class<StudentClass> gSC;
-        String fileName = "in_5_Tabbed.txt";
-        StudentClass temp;
+        String fileName = "data.txt";
 
         // title
         System.out.println( "\nGeneric_BST_Class Data Testing Program\n" );
@@ -36,52 +35,6 @@ public class BST_ClassMain
         gSC = getData( fileName );
         System.out.println( "Data Retrieval from file - End" );
         System.out.print( "\nData Display - " );
-        gSC.displayInOrder();
-
-        // test for addition of redundant data
-        // ---> Insert code here
-        // ---> Display code here
-        gSC.displayInOrder();
-
-        // test for removal of data
-        gSC.clearTree();
-        System.out.print( "\nData Display after clearing tree - " );
-        gSC.displayInOrder();
-
-        gSC = getData( fileName );
-        System.out.print( "\nData Display after reload - " );
-        gSC.displayInOrder();
-
-        // test for removal from left node
-        // ---> Remove code here
-        System.out.print( "\nData Display after removal from left node: " + temp
-                + " - " );
-        gSC.displayInOrder();
-
-        // test for removal from right node
-        // ---> Insert code here
-        // ---> Remove code here
-        gSC.displayInOrder();
-
-        // test for removal from node having no children
-        // ---> Remove code here
-        System.out.print(
-                "\nData Display after removal from node having no children: "
-                        + temp + " - " );
-        gSC.displayInOrder();
-
-        // test for removal from node having two children
-        // ---> Remove code here
-        System.out.print(
-                "\nData Display after removal from node having two children: "
-                        + temp + " - " );
-        gSC.displayInOrder();
-
-        // test for removal from node having two children
-        // ---> Remove code here
-        System.out.print(
-                "\nData Display after attempt to remove value not in tree: >"
-                        + temp + "< - " );
         gSC.displayInOrder();
 
         System.out.println( "\n --- End of Program--- " );
